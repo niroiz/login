@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src=" js/jquery-3.2.1.js"></script>
+    <title>AJAX Overview</title>
+    <style type="text/css">
+        #loginbox {
+            width:240px;
+            height:140px;
+            margin:0px auto;
+            margin-top:300px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div id="loginbox">
+        <input id="username" type="text" placeholder="your user name">
+        <br>
+        <input id="password" type="password" placeholder="your password">
+        <br>
+        <button id="singin">Sing in</button>
+        
+    </div>
+    
+    <div id="container"></div>
+    <script type="text/javascript">
+
+        
+
+            $("#loginbox").keypress(function (event) {
+                if (event.which == 13) {
+
+                    $("#singin").click();
+                }
+            });
+
+            $("#singin").click(function () {
+
+                var username = $("#username").val();
+                var password = $("#password").val();
+
+                /*$.post("server.php", { login: username, password: password }, function (data) {
+                    if (data != "Worng login") {
+                        $("#loginbox").fadeOut();
+                        $("#container").html(data);
+                    } else {
+                        alert(data);
+                    }
+                });*/
+
+                $.ajax({
+
+                    type: 'POST',
+                    url: 'server.php',
+                    data: {
+                        'login': username,
+                        'password': password
+                    },
+                    success: function (data) {
+                        if (data != "Worng login") {
+                            $("#loginbox").fadeOut();
+                            $("#container").html(data);
+                        } else {
+                            alert(data);
+                        }
+                    }
+
+                });
+
+            });
+        </script>
+
+</body>
+</html>
